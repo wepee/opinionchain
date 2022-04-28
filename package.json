@@ -3,6 +3,17 @@
   "description": "No matter what, there always comes a time when we face choices. Just give your opinion ... on chain.",
   "author": "Avicenne",
   "homepage": "www.avicenne-agency.com",
+  "scripts": {
+    "test": "npx hardhat test",
+    "test:coverage": "npx hardhat coverage",
+    "compile": "npx hardhat compile",
+    "lint:js": "npx eslint '**/*.js'",
+    "lint:js-fix": "npx eslint '**/*.js' --fix",
+    "lint:sol": "npx prettier '**/*.{json,sol,md}' --check && npx solhint 'contracts/**/*.sol'",
+    "lint:sol-fix": "npx prettier '**/*.{json,sol,md}' --write && npx solhint 'contracts/**/*.sol' --fix",
+    "lint": "npm run lint:js && npm run lint:sol",
+    "lint:fix": "npm run lint:js-fix && npm run lint:sol-fix"
+  },
   "devDependencies": {
     "@nomiclabs/hardhat-ethers": "^2.0.5",
     "@nomiclabs/hardhat-etherscan": "^3.0.3",
