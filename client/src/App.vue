@@ -1,12 +1,28 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import Opinion from "./components/Opinion.vue";
+import { Option } from "./constants";
+
+const option1: Option = {
+  score: 0,
+  name: "bitcoin"
+}
+
+const option2: Option = {
+  score: 0,
+  name: "ethereum"
+}
+
+const mockedOpinions = [
+  [option1, option2]
+]
+
+const opinionId = 0
 </script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <Opinion :options="mockedOpinions[opinionId]" />
 </template>
 
 <style>
