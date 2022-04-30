@@ -2,7 +2,6 @@
 pragma solidity ^0.8.11;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "hardhat/console.sol";
 
 contract Opinionchain is Ownable {
     struct option {
