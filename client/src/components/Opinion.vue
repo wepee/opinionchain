@@ -1,15 +1,24 @@
 <script setup lang="ts">
 import { Option } from '../constants';
+import { toRefs } from "vue";
 
-defineProps<{ options: Option[]; }>()
+const props = defineProps<{ options: Option[]; }>()
+
+const { options } = toRefs(props);
+
+const vote = (index: number) => {
+  alert('You voted for  ' + options.value[index].name);
+}
 </script>
 
 <template>
-  <div class="option-card" v-for="option in options">
+<div class="option-slide">
+  <div class="option-card" v-for="(option, index) in options" :key="index">
     <h1>{{ option.name }}</h1>
     <h2>{{ option.score }}</h2>
-    <button class="vote-btn">Vote</button>
+    <button @click="vote(index)" class="vote-btn">Vote</button>
   </div>
+</div>
 </template>
 
 <style scoped>
@@ -18,7 +27,12 @@ defineProps<{ options: Option[]; }>()
   border-radius: 20px;
   margin: 5px;
   padding: 15px;
-  width: 300px;
+  width: 100%;
+}
+
+.option-slide {
+  display: flex;
+  flex: 1;
 }
 
 .vote-btn {
