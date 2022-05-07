@@ -1,14 +1,31 @@
 <script setup lang="ts">
+import { onMounted, ref, toRefs } from "vue";
 import { Option } from '../constants';
-import { toRefs } from "vue";
+import { metamaskInitialize, voteOnChain } from '../services/ethers-service';
 
-const props = defineProps<{ options: Option[]; }>()
-
-const { options } = toRefs(props);
-
-const vote = (index: number) => {
-  alert('You voted for  ' + options.value[index].name);
+interface Props {
+  opinionId: number
+  options: Option[]
 }
+
+const props = defineProps<Props>();
+
+const { options, opinionId } = toRefs(props);
+
+const loading = ref(false);
+
+onMounted(async () => metamaskInitialize());
+
+const vote = async (index: number) => {
+  try {
+    loading.value = true;
+    await voteOnChain(opinionId.value, index);
+  } catch (e: any) {
+    alert(e?.data?.message || e.message);
+  } finally {
+    loading.value = false
+  }
+};
 </script>
 
 <template>
@@ -16,7 +33,7 @@ const vote = (index: number) => {
   <div class="option-card" v-for="(option, index) in options" :key="index">
     <h1>{{ option.name }}</h1>
     <h2>{{ option.score }}</h2>
-    <button @click="vote(index)" class="vote-btn">Vote</button>
+    <button :disabled="loading" @click="vote(index)" class="vote-btn">Vote</button>
   </div>
 </div>
 </template>
