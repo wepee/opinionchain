@@ -1,29 +1,27 @@
 <script setup lang="ts">
+import { onMounted, toRefs } from 'vue';
 import { Option } from '../constants';
-import { onMounted, toRefs } from "vue";
-import { metamaskInitialize, voteOnChain } from "../services/ethers-service";
+import { metamaskInitialize, voteOnChain } from '../services/ethers-service';
 
 interface Props {
   opinionId: number
   options: Option[]
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
 const { options, opinionId } = toRefs(props);
 
-onMounted(async () => metamaskInitialize())
+onMounted(async () => metamaskInitialize());
 
 const vote = async (index: number) => {
   try {
-
     await voteOnChain(opinionId.value, index);
+  } catch (e: any) {
+    console.log(e);
+    alert(e?.data?.message || e.message);
   }
-  catch (e) {
-    console.log(e)
-    alert(e?.data?.message || e.message)
-  }
-}
+};
 </script>
 
 <template>
