@@ -2,9 +2,16 @@
 import { Option } from '../constants';
 import { toRefs } from "vue";
 
-const props = defineProps<{ options: Option[]; }>()
+interface Props {
+  opinionId: number
+  options: Option[]
+}
 
-const { options } = toRefs(props);
+const props = defineProps<Props>()
+
+const { options, opinionId } = toRefs(props);
+
+onMounted(async () => metamaskInitialize())
 
 const vote = (index: number) => {
   alert('You voted for  ' + options.value[index].name);

@@ -22,7 +22,7 @@ const opinionId = 0
 </script>
 
 <template>
-  <Opinion :options="mockedOpinions[opinionId]" />
+  <Opinion :opinion-id="opinionId" :options="mockedOpinions[opinionId]" />
 </template>
 
 <style>
