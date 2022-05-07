@@ -3,26 +3,18 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import Opinion from "./components/Opinion.vue";
 import { Option } from "./constants";
+import { onMounted, ref } from "vue";
+import { getOpinionsOnChain } from "./services/ethers-service";
 
-const option1: Option = {
-  score: 0,
-  name: "bitcoin"
-}
+const opinions = ref<Option[]>();
 
-const option2: Option = {
-  score: 0,
-  name: "ethereum"
-}
-
-const mockedOpinions = [
-  [option1, option2]
-]
+onMounted(async () => opinions.value = await getOpinionsOnChain());
 
 const opinionId = 0
 </script>
 
 <template>
-  <Opinion :opinion-id="opinionId" :options="mockedOpinions[opinionId]" />
+  <Opinion v-if="opinions" :opinion-id="opinionId" :options="opinions[opinionId]" />
 </template>
 
 <style>
